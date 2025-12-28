@@ -2,9 +2,14 @@ if exists("b:current_syntax")
     finish
 endif
 
+syntax sync fromstart
+
 syntax region blinkBlockComment
-    \ start=/--\[([=]*)\[/
-    \ end=/\]([=]*)\]/
+    \ start=/--\[\z(=*\)\[/
+    \ end=/\]\z1\]/
+    \ keepend
+    \ extend
+    \ containedin=ALL
 syntax match blinkComment /--.*$/
 
 syntax keyword blinkScopeKeyword scope
@@ -49,6 +54,7 @@ syntax match blinkNumber /\\d+?/
 syntax match blinkString /\"\\w+\"/
 
 highlight link blinkComment Comment
+highlight link blinkBlockComment Comment
 highlight link blinkKeyword Keyword
 highlight link blinkScopeKeyword Keyword
 highlight link blinkScopeName Type
